@@ -8,7 +8,7 @@ export const Nav = defineComponent(
   ({ city, cities, cityName, changeCity }) => {
     return (
       <div className="text-center p-2 border-b border-gray-200 flex font-light relative">
-        <div className="text-sm text-gray-700 flex-none m-auto hover:bg-gray-100 rounded px-2 py-1 cursor-pointer relative">
+        <div className="text-sm text-gray-700 flex-none m-1 hover:bg-gray-100 rounded px-2 py-1 cursor-pointer relative">
           {cityName}
           <Icon icon="carbon:chevron-down" className="inline-block text-gray-500 align-middle"/>
           <select
@@ -22,14 +22,17 @@ export const Nav = defineComponent(
           </select>
         </div>
         <div className="flex-auto"></div>
-        <div className="hover:bg-gray-100 hover:text-gray-700 text-gray-500 rounded py-1 px-2 mx-1 cursor-pointer">
+        <div className="hover:bg-gray-100 hover:text-gray-700 text-gray-500 rounded p-2 mx-1 m-auto cursor-pointer">
           <Icon icon="carbon:search" className="text-lg"/>
         </div>
-        <div className="hover:bg-gray-100 hover:text-gray-700 text-gray-500 rounded py-1 px-2 mx-1 cursor-pointer">
+        <div className="hover:bg-gray-100 hover:text-gray-700 text-gray-500 rounded p-2 mx-1 m-auto cursor-pointer">
           <Icon icon="carbon:map" className="text-lg"/>
         </div>
 
-        <div className="text-lg text-gray-700 absolute top-auto left-0 right-0 bottom-auto -mr-2 pointer-events-none">
+        <div
+          className="text-lg text-gray-700 absolute left-0 right-0 -mr-2 pointer-events-none"
+          style={{ top: '50%', transform: 'translateY(-50%)' }}
+        >
           <div className="inline-block m-auto">
             <Icon icon="carbon:cafe" className="inline-block mr-2 text-xl -mt-1 text-gray-500"/>
             <div className="inline-block m-auto">

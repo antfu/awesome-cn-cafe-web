@@ -1,7 +1,8 @@
 import React from 'react'
 import { defineComponent } from 'reactivue'
+import { Icon } from '@iconify/react-with-api'
 import { filter, setFilter } from '../store'
-import { Colors } from '../constants'
+import { Colors, ColorToIcon } from '../constants'
 
 export const FloatControl = defineComponent(
   () => ({ filter }),
@@ -11,10 +12,12 @@ export const FloatControl = defineComponent(
         { Colors.map(color => (
           <button
             key={color}
-            className="w-5 h-5 rounded-full m-1 border-4 focus:outline-none outline-none transition-all duration-300"
-            style={{ background: color, borderColor: filter === color ? color : 'white' }}
+            className={`py-2 px-1 focus:outline-none outline-none transition-all duration-300 ${(filter === color || filter === 'all') ? '' : 'opacity-25'}`}
+            style={{ color }}
             onClick={() => setFilter(color)}
-          ></button>
+          >
+            <Icon className="pointer-events-none" icon={ColorToIcon[color]}/>
+          </button>
         ))}
       </div>
     )

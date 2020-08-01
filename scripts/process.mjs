@@ -22,6 +22,16 @@ import fg from 'fast-glob'
   for (const file of files) {
     const name = path.parse(file).name
     data[name].data = JSON.parse(await fs.readFile(file, 'utf-8'))
+
+    data[name].data.features.forEach(i =>
+      i.properties.shortname = i.properties['名称']
+        .replace(/[(（].*[)）]/g, '')
+        .replace('星巴克', 'Starbucks')
+        .replace(/Starbucks\s*Starbucks/, 'Starbucks')
+        .trim(),
+    )
+
+    // calc center
     const coordinates = data[name].data.features.map(i => i.geometry.coordinates)
     data[name].center = coordinates
       .reduce((a, b) => [a[0] + b[0], a[1] + b[1]], [0, 0])

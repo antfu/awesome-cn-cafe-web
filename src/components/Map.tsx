@@ -13,18 +13,24 @@ interface Props {
 const SCALE = 10
 
 function createColorPoint(...color: number[]) {
-  const width = 12
+  const d = 48
+  const r = d / 2
+  const r2 = r ** 2
   const bytesPerPixel = 4
-  const data = new Uint8Array(width * width * bytesPerPixel)
 
-  for (let x = 0; x < width; x++) {
-    for (let y = 0; y < width; y++) {
-      const offset = (y * width + x) * bytesPerPixel
-      for (let b = 0; b < 4; b++)
+  const data = new Uint8Array(d * d * bytesPerPixel)
+
+  for (let x = 0; x < d; x++) {
+    for (let y = 0; y < d; y++) {
+      if ((x - r) ** 2 + (y - r) ** 2 >= r2)
+        continue
+
+      const offset = (y * d + x) * bytesPerPixel
+      for (let b = 0; b < bytesPerPixel; b++)
         data[offset + b] = color[b]
     }
   }
-  return { width, height: width, data }
+  return { width: d, height: d, data }
 }
 
 export class Map extends React.Component<Props> {
@@ -36,15 +42,15 @@ export class Map extends React.Component<Props> {
   componentDidMount() {
     this.map = new window.mapboxgl.Map({
       container: this.mapContainer,
-      style: 'mapbox://styles/mapbox/streets-v11',
+      style: 'mapbox://styles/anthonyfu117/cjygtd7sr07dq1cqibnpqvq4w',
       center: this.props.data.center,
       zoom: SCALE,
     })
     window.map = this.map
     this.map.on('load', () => {
-      this.map.addImage('#50C240', createColorPoint(139, 195, 74, 255))
-      this.map.addImage('#C24740', createColorPoint(194, 71, 64, 255))
+      this.map.addImage('#50C240', createColorPoint(80, 194, 64, 255))
       this.map.addImage('#F3AE1A', createColorPoint(255, 193, 7, 255))
+      this.map.addImage('#C24740', createColorPoint(194, 71, 64, 255))
       this.map.addImage('#BEBEBE', createColorPoint(125, 125, 125, 255))
 
       this.updateMap()
@@ -107,10 +113,18 @@ export class Map extends React.Component<Props> {
       source: 'source',
       layout: {
         'icon-image': ['get', 'marker-color'],
-        'text-field': ['get', '名称'],
+        'icon-size': 0.25,
+        'text-field': ['get', 'shortname'],
         'text-size': 12,
         'text-offset': [0, 0.5],
         'text-anchor': 'top',
+        'icon-allow-overlap': true,
+      },
+      paint: {
+        'text-color': '#7e6c56',
+        'text-halo-color': '#fff',
+        'text-halo-width': 1,
+        'text-halo-blur': 0,
       },
     })
   }
