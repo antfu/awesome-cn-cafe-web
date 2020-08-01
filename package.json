@@ -7,7 +7,7 @@
     "data": "node ./scripts/process.mjs",
     "postinstall": "npm run fetch && npm run data",
     "dev": "vite",
-    "build": "vite build"
+    "build": "npm run postinstall && vite build"
   },
   "dependencies": {
     "@pika/react": "^16.13.1",
