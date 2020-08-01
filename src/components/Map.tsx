@@ -1,9 +1,12 @@
 import React from 'react'
+import { setCurrent } from '../store'
 
 window.mapboxgl.accessToken = 'pk.eyJ1IjoiYW50aG9ueWZ1MTE3IiwiYSI6ImNrZGJxa3U2MTB1ZjgycXJ4eWQ5N3cxN3cifQ.Vz_GndQJpG6ybjFc-MJaCw'
 
 interface Props {
   city: string
+  filter: string
+  geo: any
   data: any
 }
 
@@ -28,6 +31,7 @@ export class Map extends React.Component<Props> {
   mapContainer: HTMLDivElement | undefined | null
   map: any
   last = 'shanghai'
+  lastFilter = 'all'
 
   componentDidMount() {
     this.map = new window.mapboxgl.Map({
@@ -45,53 +49,75 @@ export class Map extends React.Component<Props> {
 
       this.updateMap()
     })
+
+    this.map.on('click', 'layer', (e: any) => {
+      if (!e.features)
+        return
+
+      const coordinates = e.features[0].geometry.coordinates.slice()
+      const properties = e.features[0].properties
+
+      setCurrent({
+        coordinates,
+        properties,
+      })
+    })
+
+    this.map.on('mouseenter', 'layer', () => {
+      this.map.getCanvas().style.cursor = 'pointer'
+    })
+
+    this.map.on('mouseleave', 'layer', () => {
+      this.map.getCanvas().style.cursor = ''
+    })
   }
 
   componentDidUpdate() {
-    console.log('props', this.props)
     this.updateMap()
   }
 
   shouldComponentUpdate(next: Props) {
-    console.log('should', this.last, next)
-    return this.last !== next.city
+    return this.last !== next.city || this.lastFilter !== next.filter
   }
 
   updateMap() {
-    this.last = this.props.city
+    const { city, filter, geo, data } = this.props
+    this.last = city
+    this.lastFilter = filter
 
     this.map.flyTo({
-      center: this.props.data.center,
+      center: data.center,
       zoom: SCALE,
       speed: 2,
     })
 
-    if (!this.map.getSource(this.props.city)) {
-      this.map.addSource(this.props.city, {
-        type: 'geojson',
-        data: this.props.data.data,
-      })
-    }
+    if (this.map.getLayer('layer'))
+      this.map.removeLayer('layer')
+    if (this.map.getSource('source'))
+      this.map.removeSource('source')
 
-    if (!this.map.getLayer(`layer-${this.props.city}`)) {
-      this.map.addLayer({
-        id: `layer-${this.props.city}`,
-        type: 'symbol',
-        source: this.props.city,
-        layout: {
-          'icon-image': ['get', 'marker-color'],
-          'text-field': ['get', '名称'],
-          'text-size': 12,
-          'text-offset': [0, 0.5],
-          'text-anchor': 'top',
-        },
-      })
-    }
+    this.map.addSource('source', {
+      type: 'geojson',
+      data: geo,
+    })
+
+    this.map.addLayer({
+      id: 'layer',
+      type: 'symbol',
+      source: 'source',
+      layout: {
+        'icon-image': ['get', 'marker-color'],
+        'text-field': ['get', '名称'],
+        'text-size': 12,
+        'text-offset': [0, 0.5],
+        'text-anchor': 'top',
+      },
+    })
   }
 
   render() {
     return (
-      <div ref={el => this.mapContainer = el} style={{ height: '100%', width: '100%' }} />
+      <div ref={(el: any) => this.mapContainer = el} style={{ height: '100%', width: '100%' }} />
     )
   }
 }
