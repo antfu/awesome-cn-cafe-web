@@ -1,0 +1,44 @@
+{
+  "name": "awesome-cn-cafe-web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "fetch": "git clone https://github.com/ElaWorkshop/awesome-cn-cafe cafe 2> /dev/null || git -C cafe pull",
+    "data": "node ./scripts/process.mjs",
+    "postinstall": "npm run fetch && npm run data",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@pika/react": "^16.13.1",
+    "@pika/react-dom": "^16.13.1",
+    "@vueuse/core": "^4.0.0-beta.4",
+    "reactivue": "^0.2.0",
+    "tailwindcss": "^1.6.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config-ts": "^0.2.14",
+    "@iconify/react-with-api": "^1.0.0-beta.2",
+    "@types/react": "^16.9.44",
+    "@types/react-dom": "^16.9.8",
+    "@typescript-eslint/eslint-plugin": "^3.7.1",
+    "eslint": "^7.6.0",
+    "eslint-plugin-react": "^7.20.5",
+    "fast-glob": "^3.2.4",
+    "typescript": "^3.9.7",
+    "vite": "^1.0.0-rc.4",
+    "vite-plugin-react": "^3.0.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:react/recommended",
+      "@antfu/eslint-config-ts"
+    ],
+    "rules": {
+      "jsx-quotes": [
+        "error",
+        "prefer-double"
+      ]
+    }
+  }
+}
