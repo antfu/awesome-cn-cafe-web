@@ -21,8 +21,9 @@ export const ListItem = ({ shop }: Props) => {
     setCurrent(shop)
     setSearchOpen(false)
     emitter.emit('fly-to', {
-      coordinates: shop.coordinates,
-      zoom: 12,
+      center: [shop.coordinates[0], shop.coordinates[1] - 0.005],
+      zoom: 14,
+      speed: 1.5,
     })
   }
 

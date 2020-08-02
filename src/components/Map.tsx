@@ -92,6 +92,10 @@ export class Map extends React.Component<Props> {
       this.geoControl.trigger()
     })
 
+    emitter.on('fly-to', (data: any) => {
+      this.map.flyTo(data)
+    })
+
     this.geoControl.on('geolocate', (e: any) => {
       setLoc([e.coords.longitude, e.coords.latitude])
     })
