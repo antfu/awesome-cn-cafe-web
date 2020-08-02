@@ -1,20 +1,11 @@
 import React from 'react'
 import { CafeShop } from '../types'
-import { AppName } from '../constants'
-import { getDistanceFromMe } from '../store'
+import { AppName, ignoredProperties } from '../constants'
+import { getDistanceFromMe } from '../utils/distance'
 
 interface Props {
   shop: CafeShop
 }
-
-const ignores = [
-  '名称',
-  '下载速度',
-  'shortname',
-  'Speedtest 链接',
-  'marker-color',
-  'marker-symbol',
-]
 
 export const Detail = ({ shop }: Props) => {
   const { properties, coordinates } = shop
@@ -27,7 +18,7 @@ export const Detail = ({ shop }: Props) => {
   const distance = getDistanceFromMe(coordinates)
 
   const table = Object.entries(properties)
-    .filter(([k]) => !ignores.includes(k))
+    .filter(([k]) => !ignoredProperties.includes(k))
 
   return (
     <div className="p-6">

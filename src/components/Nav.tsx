@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon } from '@iconify/react-with-api'
 import { defineComponent } from 'reactivue'
-import { city, cityName, cities, changeCity, Cities, setAbout } from '../store'
+import { city, cityName, cities, changeCity, Cities, setAbout, setSearchOpen } from '../store'
 import { emitter } from '../event'
 import { Logo } from './Logo'
 
@@ -24,7 +24,10 @@ export const Nav = defineComponent(
           </select>
         </div>
         <div className="flex-auto"></div>
-        <div className="hover:bg-gray-100 hover:text-gray-700 text-gray-500 rounded p-2 mx-1 m-auto cursor-pointer">
+        <div
+          className="hover:bg-gray-100 hover:text-gray-700 text-gray-500 rounded p-2 mx-1 m-auto cursor-pointer"
+          onClick={() => setSearchOpen(true)}
+        >
           <Icon icon="carbon:search" className="text-lg"/>
         </div>
         <div

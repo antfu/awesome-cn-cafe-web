@@ -23,13 +23,18 @@ import fg from 'fast-glob'
     const name = path.parse(file).name
     data[name].data = JSON.parse(await fs.readFile(file, 'utf-8'))
 
-    data[name].data.features.forEach(i =>
+    data[name].data.features.forEach((i) => {
       i.properties.shortname = i.properties['名称']
         .replace(/[(（].*[)）]/g, '')
         .replace('星巴克', 'Starbucks')
         .replace(/Starbucks\s*Starbucks/, 'Starbucks')
-        .trim(),
-    )
+        .trim()
+
+      i.properties.referrers = Object.keys(i.properties)
+        .map(i => i.match(/(@[\w_-]+)/))
+        .filter(Boolean)
+        .map(i => i[1])
+    })
 
     // calc center
     const coordinates = data[name].data.features.map(i => i.geometry.coordinates)
