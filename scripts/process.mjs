@@ -39,4 +39,5 @@ import fg from 'fast-glob'
   }
 
   await fs.writeFile('./src/data.json', JSON.stringify(data), 'utf-8')
+  await fs.writeFile('./src/build.ts', `export const BuildTime = ${+new Date()}\n`, 'utf-8')
 })()

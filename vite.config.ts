@@ -11,6 +11,7 @@ const config: UserConfig = {
   },
   optimizeDeps: {
     exclude: [
+      'dayjs',
       'reactivue',
       'react-mapbox-gl',
     ],

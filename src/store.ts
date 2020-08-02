@@ -10,6 +10,7 @@ export type Cities = keyof typeof raw
 export const city = useStorage('cafe-cn-city', 'shanghai') as Ref<Cities>
 export const filter = useStorage('cafe-cn-filter', 'all')
 export const loc = ref<[number, number] | null>(null)
+export const about = ref(false)
 
 export const data = computed(() => rawData[city.value])
 
@@ -40,6 +41,7 @@ export const setFilter = (v: string) => filter.value === v ? filter.value = 'all
 export const changeCity = (v: Cities) => city.value = v
 export const setCurrent = (v: CafeShop | null) => current.value = v
 export const setLoc = (v: [number, number] | null) => loc.value = v
+export const setAbout = (v: boolean) => about.value = v
 
 export const getDistanceFromMe = (coords: [number, number]) => {
   if (!loc.value)

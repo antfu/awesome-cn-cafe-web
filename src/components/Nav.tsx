@@ -1,8 +1,9 @@
 import React from 'react'
 import { Icon } from '@iconify/react-with-api'
 import { defineComponent } from 'reactivue'
-import { city, cityName, cities, changeCity, Cities } from '../store'
+import { city, cityName, cities, changeCity, Cities, setAbout } from '../store'
 import { emitter } from '../event'
+import { Logo } from './Logo'
 
 export const Nav = defineComponent(
   () => ({ cities, city, cityName, changeCity }),
@@ -34,15 +35,11 @@ export const Nav = defineComponent(
         </div>
 
         <div
-          className="text-lg text-gray-700 absolute left-0 right-0 -mr-2 pointer-events-none"
-          style={{ top: '50%', transform: 'translateY(-50%)' }}
+          className="text-lg text-gray-700 absolute -mr-2 select-none"
+          style={{ top: '50%', transform: 'translate(-50%, -50%)', left: '50%' }}
+          onClick={() => setAbout(true)}
         >
-          <div className="inline-block m-auto">
-            <Icon icon="carbon:cafe" className="inline-block mr-2 text-xl -mt-1 text-gray-500"/>
-            <div className="inline-block m-auto">
-            Café <sup className="text-gray-400 text-xs">CN</sup>
-            </div>
-          </div>
+          <Logo/>
         </div>
       </div>
     )

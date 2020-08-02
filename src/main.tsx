@@ -1,17 +1,18 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { defineComponent } from 'reactivue'
+import { city, data, filteredGeo, filter, setCurrent, current, about, setAbout } from './store'
 import { Nav } from './components/Nav'
 import { Map } from './components/Map'
 import { FloatControl } from './components/FloatControl'
-import { city, data, filteredGeo, filter, setCurrent, current } from './store'
 import { Modal } from './components/Modal'
 import { Detail } from './components/Detail'
+import { About } from './components/About'
 import './main.css'
 
 const App = defineComponent(
-  () => ({ city, data, filteredGeo, filter, current }),
-  ({ city, data, filteredGeo, filter, current }) => {
+  () => ({ city, data, filteredGeo, filter, current, about }),
+  ({ city, data, filteredGeo, filter, current, about }) => {
     return (
       <div style={{ height: '100%', display: 'grid', gridTemplateRows: 'max-content auto' }}>
         <Nav/>
@@ -19,6 +20,9 @@ const App = defineComponent(
         <FloatControl />
         <Modal value={!!current} setValue={() => setCurrent(null)}>
           {current ? <Detail shop={current}/> : null }
+        </Modal>
+        <Modal value={about} setValue={() => setAbout(false)}>
+          <About/>
         </Modal>
       </div>
     )
