@@ -2,8 +2,8 @@ dependencies:
   '@pika/react': 16.13.1
   '@pika/react-dom': 16.13.1
   '@vueuse/core': 4.0.0-beta.4
-  dayjs: 1.8.31
   emitt: 1.3.3
+  fuse.js: 6.4.1
   reactivue: 0.2.0
   tailwindcss: 1.6.0
 devDependencies:
@@ -1255,10 +1255,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-ofovWglpqoqbfLNOTBNZLSbMuGrblAf1efvvArGKOZMBrIoJeu5UsAipQolkijtyQx5MtAzT/J9IHj/CEY1mJw==
-  /dayjs/1.8.31:
-    dev: false
-    resolution:
-      integrity: sha512-mPh1mslned+5PuIuiUfbw4CikHk6AEAf2Baxih+wP5fssv+wmlVhvgZ7mq+BhLt7Sr/Hc8leWDiwe6YnrpNt3g==
   /debug/2.6.9:
     dependencies:
       ms: 2.0.0
@@ -1949,6 +1945,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
+  /fuse.js/6.4.1:
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-+hAS7KYgLXontDh/vqffs7wIBw0ceb9Sx8ywZQhOsiQGcSO5zInGhttWOUYQYlvV/yYMJOacQ129Xs3mP3+oZQ==
   /generic-names/2.0.1:
     dependencies:
       loader-utils: 1.4.0
@@ -4064,11 +4066,11 @@ specifiers:
   '@types/react-dom': ^16.9.8
   '@typescript-eslint/eslint-plugin': ^3.7.1
   '@vueuse/core': ^4.0.0-beta.4
-  dayjs: ^1.8.31
   emitt: ^1.3.3
   eslint: ^7.6.0
   eslint-plugin-react: ^7.20.5
   fast-glob: ^3.2.4
+  fuse.js: ^6.4.1
   reactivue: ^0.2.0
   tailwindcss: ^1.6.0
   typescript: ^3.9.7

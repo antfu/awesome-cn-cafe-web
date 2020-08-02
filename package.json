@@ -14,6 +14,7 @@
     "@pika/react-dom": "^16.13.1",
     "@vueuse/core": "^4.0.0-beta.4",
     "emitt": "^1.3.3",
+    "fuse.js": "^6.4.1",
     "reactivue": "^0.2.0",
     "tailwindcss": "^1.6.0"
   },

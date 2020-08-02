@@ -1,24 +1,24 @@
 import React from 'react'
 import { CafeShop } from '../types'
-import { AppName, ignoredProperties } from '../constants'
-import { getDistanceFromMe } from '../utils/distance'
+import { AppName } from '../constants'
+import { parseShop } from '../utils/parseShop'
 
 interface Props {
   shop: CafeShop
 }
 
 export const Detail = ({ shop }: Props) => {
-  const { properties, coordinates } = shop
-
-  const name = properties['名称']
-  const speed = properties['下载速度']
-  const speedtest = properties['Speedtest 链接']
-  const location1 = coordinates.join(',')
-  const location2 = coordinates.slice().reverse().join(',')
-  const distance = getDistanceFromMe(coordinates)
-
-  const table = Object.entries(properties)
-    .filter(([k]) => !ignoredProperties.includes(k))
+  const {
+    name,
+    color,
+    speed,
+    speedtest,
+    location1,
+    location2,
+    table,
+    coordinates,
+    distance,
+  } = parseShop(shop)
 
   return (
     <div className="p-6">
@@ -26,7 +26,7 @@ export const Detail = ({ shop }: Props) => {
       <p className="text-gray-500 text-sm">
         <a
           className="inline-block align-middle"
-          style={{ color: properties['marker-color'] }}
+          style={{ color }}
           href={speedtest}
           target="_blank"
           rel="noreferrer"
