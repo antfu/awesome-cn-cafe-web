@@ -2,6 +2,7 @@ import React from 'react'
 import { Icon } from '@iconify/react-with-api'
 import { defineComponent } from 'reactivue'
 import { city, cityName, cities, changeCity, Cities } from '../store'
+import { emitter } from '../event'
 
 export const Nav = defineComponent(
   () => ({ cities, city, cityName, changeCity }),
@@ -25,7 +26,10 @@ export const Nav = defineComponent(
         <div className="hover:bg-gray-100 hover:text-gray-700 text-gray-500 rounded p-2 mx-1 m-auto cursor-pointer">
           <Icon icon="carbon:search" className="text-lg"/>
         </div>
-        <div className="hover:bg-gray-100 hover:text-gray-700 text-gray-500 rounded p-2 mx-1 m-auto cursor-pointer">
+        <div
+          className="hover:bg-gray-100 hover:text-gray-700 text-gray-500 rounded p-2 mx-1 m-auto cursor-pointer"
+          onClick={() => emitter.emit('track')}
+        >
           <Icon icon="carbon:map" className="text-lg"/>
         </div>
 

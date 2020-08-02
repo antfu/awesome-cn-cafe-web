@@ -1,6 +1,7 @@
 import React from 'react'
 import { CafeShop } from '../types'
 import { AppName } from '../constants'
+import { getDistanceFromMe } from '../store'
 
 interface Props {
   shop: CafeShop
@@ -23,6 +24,7 @@ export const Detail = ({ shop }: Props) => {
   const speedtest = properties['Speedtest 链接']
   const location1 = coordinates.join(',')
   const location2 = coordinates.slice().reverse().join(',')
+  const distance = getDistanceFromMe(coordinates)
 
   const table = Object.entries(properties)
     .filter(([k]) => !ignores.includes(k))
@@ -40,6 +42,16 @@ export const Detail = ({ shop }: Props) => {
         >
           {speed}
         </a>
+        {
+          distance
+            ? (
+              <>
+                <span className="inline-block align-middle mx-1">・</span>
+                <span className="inline-block align-middle">{distance}</span>
+              </>
+            )
+            : null
+        }
         <span className="inline-block align-middle mx-1">・</span>
         <span className="inline-block align-middle">{coordinates.map(i => i.toFixed(3)).join(', ')}</span>
       </p>

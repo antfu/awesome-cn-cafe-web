@@ -2,6 +2,7 @@ dependencies:
   '@pika/react': 16.13.1
   '@pika/react-dom': 16.13.1
   '@vueuse/core': 4.0.0-beta.4
+  emitt: 1.3.3
   reactivue: 0.2.0
   tailwindcss: 1.6.0
 devDependencies:
@@ -879,6 +880,30 @@ packages:
       eslint: '>= 4.12.1'
     resolution:
       integrity: sha512-ifWaTHQ0ce+448CYop8AdrQiBsGrnC+bMgfyKFdi6EsPLTAWG+QfyDeM6OH+FmWnKvEq5NnBMLvlBUPKQZoDSg==
+  /babel-plugin-syntax-flow/6.18.0:
+    dev: false
+    resolution:
+      integrity: sha1-TDqyCiryaqIM0lmVw5jE63AxDI0=
+  /babel-plugin-transform-flow-strip-types/6.22.0:
+    dependencies:
+      babel-plugin-syntax-flow: 6.18.0
+      babel-runtime: 6.26.0
+    dev: false
+    resolution:
+      integrity: sha1-hMtnKTXUNxT9wyvOhFaNh0Qc988=
+  /babel-preset-flow/6.23.0:
+    dependencies:
+      babel-plugin-transform-flow-strip-types: 6.22.0
+    dev: false
+    resolution:
+      integrity: sha1-5xIYiHCFrpoktb5Baa/7WZgWxJ0=
+  /babel-runtime/6.26.0:
+    dependencies:
+      core-js: 2.6.11
+      regenerator-runtime: 0.11.1
+    dev: false
+    resolution:
+      integrity: sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
   /balanced-match/1.0.0:
     resolution:
       integrity: sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
@@ -1184,6 +1209,12 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha512-8aPsApQfebXnuI+537McwYsDtjVxGm8gTIzQI3FDW6t5t/DAhERxtnbEPN/8RX+uZthoz4eCOgloXaE5cYyNow==
+  /core-js/2.6.11:
+    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
+    dev: false
+    requiresBuild: true
+    resolution:
+      integrity: sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
   /cosmiconfig/5.2.1:
     dependencies:
       import-fresh: 2.0.0
@@ -1369,6 +1400,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-WDM5AAQdOrvLqSX8g3Zd5AujBXfMxf96oeZkff0U2HF5op3tjShE+on2yay3r1UD4M9I3p0iHpAS4+yV8U8A9A==
+  /emitt/1.3.3:
+    dependencies:
+      babel-preset-flow: 6.23.0
+    dev: false
+    resolution:
+      integrity: sha512-L9Hkuqyf6buLxH9oay3/qWoFJb4Z+JHasw8643G2C6P2JHus3XX5S5pgpaDfZKXKoxoXk628R15uCuiDtb/zZw==
   /emoji-regex/7.0.3:
     dev: true
     resolution:
@@ -3291,6 +3328,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-fDnlZ+AybAS3C7Q9xDq5y8A2z+lT63zLbynew/lur/IR24OQF5x98tfNwf79mzEdfywZ0a2wpM860FhFfMxZlA==
+  /regenerator-runtime/0.11.1:
+    dev: false
+    resolution:
+      integrity: sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
   /regexp-tree/0.1.21:
     dev: true
     hasBin: true
@@ -4018,6 +4059,7 @@ specifiers:
   '@types/react-dom': ^16.9.8
   '@typescript-eslint/eslint-plugin': ^3.7.1
   '@vueuse/core': ^4.0.0-beta.4
+  emitt: ^1.3.3
   eslint: ^7.6.0
   eslint-plugin-react: ^7.20.5
   fast-glob: ^3.2.4

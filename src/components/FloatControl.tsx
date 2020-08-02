@@ -8,17 +8,19 @@ export const FloatControl = defineComponent(
   () => ({ filter }),
   ({ filter }) => {
     return (
-      <div className="fixed bottom-0 left-0 mx-3 mb-10 p-2 bg-white rounded shadow flex flex-col">
-        { Colors.map(color => (
-          <button
-            key={color}
-            className={`py-2 px-1 focus:outline-none outline-none transition-all duration-300 ${(filter === color || filter === 'all') ? '' : 'opacity-25'}`}
-            style={{ color }}
-            onClick={() => setFilter(color)}
-          >
-            <Icon className="pointer-events-none" icon={ColorToIcon[color]}/>
-          </button>
-        ))}
+      <div className="fixed bottom-0 left-0 mx-3 mb-10">
+        <div className="bg-white rounded shadow flex flex-col p-2">
+          { Colors.map(color => (
+            <button
+              key={color}
+              className={`py-2 px-1 focus:outline-none outline-none transition-all duration-300 ${(filter === color || filter === 'all') ? '' : 'opacity-25'}`}
+              style={{ color }}
+              onClick={() => setFilter(color)}
+            >
+              <Icon className="pointer-events-none" icon={ColorToIcon[color]}/>
+            </button>
+          ))}
+        </div>
       </div>
     )
   },

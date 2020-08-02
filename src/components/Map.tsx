@@ -1,5 +1,6 @@
 import React from 'react'
-import { setCurrent } from '../store'
+import { setCurrent, setLoc } from '../store'
+import { emitter } from '../event'
 
 window.mapboxgl.accessToken = 'pk.eyJ1IjoiYW50aG9ueWZ1MTE3IiwiYSI6ImNrZGJxa3U2MTB1ZjgycXJ4eWQ5N3cxN3cifQ.Vz_GndQJpG6ybjFc-MJaCw'
 
@@ -36,8 +37,9 @@ function createColorPoint(...color: number[]) {
 export class Map extends React.Component<Props> {
   mapContainer: HTMLDivElement | undefined | null
   map: any
-  last = 'shanghai'
-  lastFilter = 'all'
+  geoControl: any
+  last = ''
+  lastFilter = ''
 
   componentDidMount() {
     this.map = new window.mapboxgl.Map({
@@ -76,6 +78,23 @@ export class Map extends React.Component<Props> {
     this.map.on('mouseleave', 'layer', () => {
       this.map.getCanvas().style.cursor = ''
     })
+
+    this.geoControl = new window.mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      trackUserLocation: true,
+    })
+
+    this.map.addControl(this.geoControl)
+
+    emitter.on('track', () => {
+      this.geoControl.trigger()
+    })
+
+    this.geoControl.on('geolocate', (e: any) => {
+      setLoc([e.coords.longitude, e.coords.latitude])
+    })
   }
 
   componentDidUpdate() {
@@ -88,45 +107,50 @@ export class Map extends React.Component<Props> {
 
   updateMap() {
     const { city, filter, geo, data } = this.props
+
+    if (this.last !== city) {
+      this.map.flyTo({
+        center: data.center,
+        zoom: SCALE,
+        speed: 2,
+      })
+    }
+
+    if (this.lastFilter !== filter) {
+      if (this.map.getLayer('layer'))
+        this.map.removeLayer('layer')
+      if (this.map.getSource('source'))
+        this.map.removeSource('source')
+
+      this.map.addSource('source', {
+        type: 'geojson',
+        data: geo,
+      })
+
+      this.map.addLayer({
+        id: 'layer',
+        type: 'symbol',
+        source: 'source',
+        layout: {
+          'icon-image': ['get', 'marker-color'],
+          'icon-size': 0.25,
+          'text-field': ['get', 'shortname'],
+          'text-size': 12,
+          'text-offset': [0, 0.5],
+          'text-anchor': 'top',
+          'icon-allow-overlap': true,
+        },
+        paint: {
+          'text-color': '#7e6c56',
+          'text-halo-color': '#fff',
+          'text-halo-width': 1,
+          'text-halo-blur': 0,
+        },
+      })
+    }
+
     this.last = city
     this.lastFilter = filter
-
-    this.map.flyTo({
-      center: data.center,
-      zoom: SCALE,
-      speed: 2,
-    })
-
-    if (this.map.getLayer('layer'))
-      this.map.removeLayer('layer')
-    if (this.map.getSource('source'))
-      this.map.removeSource('source')
-
-    this.map.addSource('source', {
-      type: 'geojson',
-      data: geo,
-    })
-
-    this.map.addLayer({
-      id: 'layer',
-      type: 'symbol',
-      source: 'source',
-      layout: {
-        'icon-image': ['get', 'marker-color'],
-        'icon-size': 0.25,
-        'text-field': ['get', 'shortname'],
-        'text-size': 12,
-        'text-offset': [0, 0.5],
-        'text-anchor': 'top',
-        'icon-allow-overlap': true,
-      },
-      paint: {
-        'text-color': '#7e6c56',
-        'text-halo-color': '#fff',
-        'text-halo-width': 1,
-        'text-halo-blur': 0,
-      },
-    })
   }
 
   render() {
