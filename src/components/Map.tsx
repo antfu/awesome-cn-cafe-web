@@ -42,23 +42,25 @@ export class Map extends React.Component<Props> {
   lastFilter = ''
 
   componentDidMount() {
-    this.map = new window.mapboxgl.Map({
+    const map = window.map = this.map = new window.mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/anthonyfu117/cjygtd7sr07dq1cqibnpqvq4w',
       center: this.props.data.center,
       zoom: SCALE,
     })
-    window.map = this.map
-    this.map.on('load', () => {
-      this.map.addImage('#50C240', createColorPoint(80, 194, 64, 255))
-      this.map.addImage('#F3AE1A', createColorPoint(255, 193, 7, 255))
-      this.map.addImage('#C24740', createColorPoint(194, 71, 64, 255))
-      this.map.addImage('#BEBEBE', createColorPoint(125, 125, 125, 255))
+
+    map.addControl(new window.MapboxLanguage({ defaultLanguage: 'zh' }))
+
+    map.on('load', () => {
+      map.addImage('#50C240', createColorPoint(80, 194, 64, 255))
+      map.addImage('#F3AE1A', createColorPoint(255, 193, 7, 255))
+      map.addImage('#C24740', createColorPoint(194, 71, 64, 255))
+      map.addImage('#BEBEBE', createColorPoint(125, 125, 125, 255))
 
       this.updateMap()
     })
 
-    this.map.on('click', 'layer', (e: any) => {
+    map.on('click', 'layer', (e: any) => {
       if (!e.features)
         return
 
@@ -71,12 +73,21 @@ export class Map extends React.Component<Props> {
       })
     })
 
-    this.map.on('mouseenter', 'layer', () => {
-      this.map.getCanvas().style.cursor = 'pointer'
+    map.on('click', 'clusters', (e: any) => {
+      console.log(e)
+
+      map.flyTo({
+        center: e.lngLan,
+        zoom: map.getZoom() + 1,
+      })
     })
 
-    this.map.on('mouseleave', 'layer', () => {
-      this.map.getCanvas().style.cursor = ''
+    map.on('mouseenter', 'layer', () => {
+      map.getCanvas().style.cursor = 'pointer'
+    })
+
+    map.on('mouseleave', 'layer', () => {
+      map.getCanvas().style.cursor = ''
     })
 
     this.geoControl = new window.mapboxgl.GeolocateControl({
@@ -86,14 +97,14 @@ export class Map extends React.Component<Props> {
       trackUserLocation: true,
     })
 
-    this.map.addControl(this.geoControl)
+    map.addControl(this.geoControl)
 
     emitter.on('track', () => {
       this.geoControl.trigger()
     })
 
     emitter.on('fly-to', (data: any) => {
-      this.map.flyTo(data)
+      map.flyTo(data)
     })
 
     this.geoControl.on('geolocate', (e: any) => {
@@ -110,10 +121,11 @@ export class Map extends React.Component<Props> {
   }
 
   updateMap() {
+    const map = this.map
     const { city, filter, geo, data } = this.props
 
     if (this.last !== city) {
-      this.map.flyTo({
+      map.flyTo({
         center: data.center,
         zoom: SCALE,
         speed: 2,
@@ -121,17 +133,50 @@ export class Map extends React.Component<Props> {
     }
 
     if (this.lastFilter !== filter) {
-      if (this.map.getLayer('layer'))
-        this.map.removeLayer('layer')
-      if (this.map.getSource('source'))
-        this.map.removeSource('source')
+      if (map.getLayer('layer'))
+        map.removeLayer('layer')
+      if (map.getLayer('clusters'))
+        map.removeLayer('clusters')
+      if (map.getLayer('clusters-count'))
+        map.removeLayer('clusters-count')
+      if (map.getSource('source'))
+        map.removeSource('source')
 
-      this.map.addSource('source', {
+      map.addSource('source', {
         type: 'geojson',
         data: geo,
+        cluster: true,
+        clusterMaxZoom: 10,
+        clusterRadius: 25,
       })
 
-      this.map.addLayer({
+      map.addLayer({
+        id: 'clusters',
+        type: 'circle',
+        source: 'source',
+        filter: ['has', 'point_count'],
+        paint: {
+          'circle-color': '#999',
+          'circle-radius': 15,
+        },
+      })
+
+      map.addLayer({
+        id: 'cluster-count',
+        type: 'symbol',
+        source: 'source',
+        filter: ['has', 'point_count'],
+        layout: {
+          'text-field': '{point_count_abbreviated}',
+          'text-size': 12,
+          'text-allow-overlap': true,
+        },
+        paint: {
+          'text-color': 'white',
+        },
+      })
+
+      map.addLayer({
         id: 'layer',
         type: 'symbol',
         source: 'source',
