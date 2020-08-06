@@ -15,9 +15,12 @@ const App = defineComponent(
   () => ({ city, data, filteredGeo, filter, current, about, searchOpen }),
   ({ city, data, filteredGeo, filter, current, about, searchOpen }) => {
     return (
-      <div style={{ height: '100%', display: 'grid', gridTemplateRows: 'max-content auto' }}>
-        <Nav/>
-        <Map city={city} data={data} geo={filteredGeo} filter={filter}/>
+      <div className="h-full relative">
+        <div className="h-full grid relative" style={{ gridTemplateRows: 'max-content auto' }}>
+          <Nav/>
+          <Map city={city} data={data} geo={filteredGeo} filter={filter}/>
+        </div>
+
         <FloatControl />
         <Modal value={!!current} setValue={() => setCurrent(null)}>
           {current ? <Detail shop={current}/> : null }
