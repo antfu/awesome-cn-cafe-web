@@ -204,7 +204,9 @@ export class Map extends React.Component<Props> {
 
   render() {
     return (
-      <div ref={(el: any) => this.mapContainer = el} style={{ height: '100%', width: '100%' }} />
+      <div className="h-full w-full relative">
+        <div ref={(el: any) => this.mapContainer = el} style={{ height: '100%', width: '100%', top: 0, bottom: 0, left: 0, right: 0 }} />
+      </div>
     )
   }
 }
