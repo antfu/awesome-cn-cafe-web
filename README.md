@@ -12,6 +12,8 @@ Web App for <a href='https://github.com/ElaWorkshop/awesome-cn-cafe'>Awesome CN 
 </p>
 <br>
 
+![](./screenshots/1.png)
+
 ## Features
 
 - Instant searching
