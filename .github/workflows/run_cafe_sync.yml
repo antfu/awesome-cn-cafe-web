@@ -6,8 +6,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - scripts/process.mjs
 
 jobs:
   sync:
@@ -16,34 +14,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Setup Node
-        uses: actions/setup-node@v1.4.1
-        with:
-          node-version: 12.x
-
-      - name: Configure yarn cache
-        uses: actions/cache@v1
-        id: yarn-cache
-        with:
-          path: node_modules/
-          key: yarn-1-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            yarn-
-
-      - name: Install dependencies
-        run: yarn install
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-
-      - name: Get data
-        run: yarn run postinstall
+      
+      - name: Get sha
+      - run: curl https://api.github.com/repos/ElaWorkshop/awesome-cn-cafe/branches/master --silent | grep "sha" | head -n1 > src/sha 
 
       - name: Push new Cafe
-        uses: github-actions-x/commit@v2.6
+      - uses: EndBug/add-and-commit@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Add new Cafe"
-          files: src/data.json
-          rebase: 'true'
-          name: yihong0618
-          email: zouzou0208@gmail.com
+          message: 'chore: update source'
+          add: "src/sha"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,5 +1,6 @@
 cafe
 node_modules
 .DS_Store
+src/data.json
 src/build.ts
 dist
