@@ -15,13 +15,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
-      - name: Get sha
-        run: curl https://api.github.com/repos/ElaWorkshop/awesome-cn-cafe/branches/master --silent | grep "sha" | head -n1 > src/sha 
+      - name: Get source sha
+        run: curl https://api.github.com/repos/ElaWorkshop/awesome-cn-cafe/branches/master --silent | grep "sha" | head -n1 > sha 
 
-      - name: Push new Cafe
+      - name: Update source sha
         uses: EndBug/add-and-commit@v4
         with:
           message: "chore: update source sha"
-          add: "src/sha"
+          add: "sha"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
