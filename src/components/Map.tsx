@@ -162,7 +162,7 @@ export class Map extends React.Component<Props> {
       })
 
       map.addLayer({
-        id: 'cluster-count',
+        id: 'clusters-count',
         type: 'symbol',
         source: 'source',
         filter: ['has', 'point_count'],
