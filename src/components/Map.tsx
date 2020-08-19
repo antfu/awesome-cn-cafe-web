@@ -74,12 +74,25 @@ export class Map extends React.Component<Props> {
     })
 
     map.on('click', 'clusters', (e: any) => {
-      console.log(e)
-
-      map.flyTo({
-        center: e.lngLan,
-        zoom: map.getZoom() + 1,
+      const features = map.queryRenderedFeatures(e.point, {
+        layers: ['clusters'],
       })
+      if (!features.length)
+        return
+      const clusterId = features[0].properties.cluster_id
+      map
+        .getSource('source')
+        .getClusterExpansionZoom(
+          clusterId,
+          (err: any, zoom: any) => {
+            if (err) return
+
+            map.easeTo({
+              center: features[0].geometry.coordinates,
+              zoom,
+            })
+          },
+        )
     })
 
     map.on('mouseenter', 'layer', () => {
@@ -152,7 +165,7 @@ export class Map extends React.Component<Props> {
         type: 'geojson',
         data: geo,
         cluster: true,
-        clusterMaxZoom: 10,
+        clusterMaxZoom: 12,
         clusterRadius: 25,
       })
 
@@ -162,8 +175,10 @@ export class Map extends React.Component<Props> {
         source: 'source',
         filter: ['has', 'point_count'],
         paint: {
-          'circle-color': '#999',
-          'circle-radius': 15,
+          'circle-color': '#d3cdc0',
+          'circle-stroke-color': '#a59a83',
+          'circle-stroke-width': 1,
+          'circle-radius': 10,
         },
       })
 
