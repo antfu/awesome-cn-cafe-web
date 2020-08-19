@@ -21,9 +21,10 @@ Web App for <a href='https://github.com/ElaWorkshop/awesome-cn-cafe'>Awesome CN 
 - Direct open in map apps
 - Filter by network speed
 - Filter by refererrs
+- Auto sync with the source every day on 00:00 UTC, thanks [@yihong0618](https://github.com/yihong0618)
 - Powered by [Vite](https://github.com/vitejs/vite) and [reactivue](https://github.com/antfu/reactivue) (React + Vue)
 
-> 💡 For maintainers of other awesome cafe lists from other country/region, if you are intersted in maintaining a fork for your cafe list, let me know and I am happy to help :)
+> 💡 For maintainers of other awesome cafe lists, if you are intersted in maintaining a fork for your cafe list, let me know and I am happy to help :)
 
 ## TODO
 
