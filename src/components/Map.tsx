@@ -114,6 +114,12 @@ export class Map extends React.Component<Props> {
 
   componentDidUpdate() {
     this.updateMap()
+
+    // trigger mapbox to resize
+    // https://github.com/mapbox/mapbox.js/issues/488#issuecomment-250504605
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'))
+    }, 300)
   }
 
   shouldComponentUpdate(next: Props) {
