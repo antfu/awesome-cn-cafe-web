@@ -1,13 +1,11 @@
-import * as reactPlugin from 'vite-plugin-react'
-import type { UserConfig } from 'vite'
-
-const config: UserConfig = {
-  jsx: 'react',
-  plugins: [reactPlugin],
-  alias: {
-    vue: 'reactivue',
-    'vue-demi': 'reactivue',
-    '@vue/runtime-dom': 'reactivue',
+import { defineConfig } from 'vite'
+export default defineConfig({
+  resolve: {
+    alias: {
+      vue: 'reactivue',
+      'vue-demi': 'reactivue',
+      '@vue/runtime-dom': 'reactivue',
+    },
   },
   optimizeDeps: {
     exclude: [
@@ -16,6 +14,4 @@ const config: UserConfig = {
       'react-mapbox-gl',
     ],
   },
-}
-
-export default config
+})

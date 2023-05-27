@@ -10,8 +10,8 @@
     "build": "npm run postinstall && vite build"
   },
   "dependencies": {
-    "@pika/react": "^16.13.1",
-    "@pika/react-dom": "^16.13.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "@vueuse/core": "^4.0.0-beta.4",
     "emitt": "^1.3.3",
     "fuse.js": "^6.4.1",
@@ -19,7 +19,7 @@
     "tailwindcss": "^1.6.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.3.1",
+    "@antfu/eslint-config": "^0.39.3",
     "@iconify/react-with-api": "^1.0.0-beta.2",
     "@types/react": "^16.9.46",
     "@types/react-dom": "^16.9.8",
@@ -28,8 +28,7 @@
     "eslint-plugin-react": "^7.20.5",
     "fast-glob": "^3.2.4",
     "typescript": "^3.9.7",
-    "vite": "^1.0.0-rc.4",
-    "vite-plugin-react": "^3.0.2"
+    "vite": "^4.3.9"
   },
   "eslintConfig": {
     "extends": "@antfu"
