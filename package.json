@@ -28,7 +28,7 @@
     "eslint-plugin-react": "^7.20.5",
     "fast-glob": "^3.2.4",
     "typescript": "^3.9.7",
-    "vite": "^1.0.0-rc.4",
+    "vite": "^2.9.16",
     "vite-plugin-react": "^3.0.2"
   },
   "eslintConfig": {
